@@ -95,12 +95,30 @@ void romb(int x, int y, int sizex, int sizey, int tcol)
    line(x + sizex/2,y + sizey,x,y + sizey/2);
 }
 
+void tes(int x, int y, int sx, int sy)
+{int m= 0, o = 1000;
+   setcolor(BLUE);
+   line(0,(double)y+(double)sy/2 - ((double)m*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx,1000,(double)y+(double)sy/2 - ((double)o*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx);
+   setcolor(GREEN);
+   line(0,(double)y+(double)sy/2 - ((double)m*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy,1000,(double)y+(double)sy/2 - ((double)o*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy);
+   setcolor(BLUE);
+   line(0,(double)y-(double)sy/2 + ((double)m*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx,1000,(double)y-(double)sy/2 + ((double)o*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx);
+   setcolor(GREEN);
+   line(0,(double)y-(double)sy/2 + ((double)m*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx+ (double)sy,1000,(double)y-(double)sy/2 + ((double)o*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx + (double)sy);
+   return;
+}
+
 int testromb(int x, int y, int sx, int sy)
 {
-   if((mousex() >= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx) &&
-      (mousex() <= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy) &&
-   (mousex() >= (double)y-(double)sy/2 + ((double)mousex()*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx) &&
-   (mousex() <= (double)y-(double)sy/2 + ((double)mousex()*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx + (double)sy) && (mousebuttons() == 1))
+   //setcolor(BLUE);
+  // line(0,(double)y+(double)sy/2 - ((double)x*(double)sy)/(double)sx,1000,(double)y+(double)sy/2 - (1000*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx);
+ //  line(0,(double)y+(double)sy/2 - ((double)x*(double)sy)/(double)sx +(double)sy,1000,(double)y+(double)sy/2 - (1000*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy);
+  // line(0,(double)y-(double)sy/2 + ((double)x*(double)sy)/(double)sx,1000,(double)y-(double)sy/2 + (1000*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx);
+ //  line(0,(double)y-(double)sy/2 + ((double)x*(double)sy)/(double)sx + (double)sy,1000,(double)y-(double)sy/2 + (1000*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx + (double)sy);
+   if((mousey() >= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx) &&
+      (mousey() <= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy) &&
+   (mousey() >= (double)y-(double)sy/2 + ((double)mousex()*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx) &&
+   (mousey() <= (double)y-(double)sy/2 + ((double)mousex()*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx + (double)sy) && (mousebuttons() == 1))
    {
       return (1);
    }
@@ -197,6 +215,32 @@ void arr(int x1,int y1, int x2, int y2,int tcol)
 void drawarrow(arrow arro, int tcol)
 {
    arr(arro.x1,arro.y1,arro.x2,arro.y2,tcol);
+   int dx = arro.x2 - arro.x1, dy = arro.y2 - arro.y1;
+   setbkmode(TRANSPARENT);
+   setcolor(BLACK);
+   settextjustify(LEFT_TEXT,TOP_TEXT);
+   if(dx > 0)
+   {
+       if(dy>=0)
+      {
+         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 - 5,arro.text);
+      }
+      else
+      {
+         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 10,arro.text);
+      }
+   }
+   else
+   {
+       if(dy>=0)
+      {
+         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 - 5,arro.text);
+      }
+      else
+      {
+         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 10,arro.text);
+      }
+   }
 }
 
 void drawobj(obj ob,int tcol)
@@ -205,40 +249,208 @@ void drawobj(obj ob,int tcol)
    {
       case(KVAD):
          kvad(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
-         break
+         break;
       case(SKVAD):
          skvad(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
-        break
+        break;
       case(ROMB):
          romb(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
-        break
+         //tes(ob.x,ob.y,ob.sizex,ob.sizey);
+         //tes(ob.x,ob.y,ob.sizex,ob.sizey);
+        break;
       case(PARL):
          parl(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
-         break
+         break;
    }
+   char a[102]; 
+   snprintf(a,(ob.sizex - 20)/8,"%s",ob.text);
+   a[(ob.sizex - 20)/8] = '\0';
+   setbkmode(TRANSPARENT);
+   setcolor(BLACK);
+   settextjustify(CENTER_TEXT, CENTER_TEXT);
+   outtextxy(ob.x + ob.sizex/2, ob.y + ob.sizey/2 + 5,a);
 }
 
 void drawallobjects()
 {
    for(int i = 0; i < kolobj; i++)
    {
-      if(i == nomobj)
-         drowobj(objm[i],1);
+      if(i == nomobj  && actoa && typeoa == 1)
+         drawobj(objm[i],1);
       else
-         drowobj(objm[i],0);
+         drawobj(objm[i],0);
    }
 }
 
-void drowallarrows()
+void drawallarrows()
 {
    for(int i = 0; i < kolarr;i++)
    {
-      if(i == nomobj)
-         drowobj(objm[i],1);
+      if(i == nomarr && actoa && typeoa == 2)
+         drawarrow(arrm[i],1);
       else
-         drowobj(objm[i],0);
+         drawarrow(arrm[i],0);
    }
 }
+
+void addobject(objtype t)
+{
+   if(kolobj < 100)
+   {
+      actoa = 1;
+      typeoa = 1;
+      kolobj++;
+      nomobj = kolobj-1;
+      objm[nomobj].t = t;
+      objm[nomobj].x = getmaxx()/2;
+      objm[nomobj].y = getmaxy()/2;
+      objm[nomobj].sizex = 100;
+      objm[nomobj].sizey = 100;
+      char a[101] = "Текст\0";
+      for(int i = 0 ;i < 101; i++)
+      {
+         objm[nomobj].text[i] = a[i];
+         if(a[i] == '\0') break;
+      }
+   }
+}
+
+void addarrow()
+{
+   if(kolarr < 100)
+   {
+      
+      actoa = 1;
+      typeoa = 2;
+      kolarr++;
+      nomarr = kolarr-1;
+      arrm[nomarr].x1 = getmaxx()/2;
+      arrm[nomarr].y1 = getmaxy()/2;
+      arrm[nomarr].x2 = getmaxx()/2+100;
+      arrm[nomarr].y2 = getmaxy()/2+100;
+      char a[101] = "Текст\0";
+      for(int i = 0 ;i < 101; i++)
+      {
+         arrm[nomarr].text[i] = a[i];
+         if(a[i] == '\0') break;
+      }
+   }
+}
+
+int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype t)
+{
+   if(mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
+   {
+      //printf("1");
+      f(t);
+      delay(100);
+      return(1);
+   }
+   else return (0);
+}
+
+int button(int left,int top, int right,int bottom,void (*f)())
+{
+   if(mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
+   {
+      f();
+      delay(100);
+      return(1);
+   }
+   else return (0);
+}
+
+void testallobjects()
+{
+   int j;
+   for(int i = 0; i < kolobj; i++)
+   {
+      switch(objm[i].t)
+      {
+         case(KVAD):
+         j = testkvad(objm[i].x,objm[i].y,objm[i].sizex,objm[i].sizey);
+         break;
+      case(SKVAD):
+         j = testskvad(objm[i].x,objm[i].y,objm[i].sizex,objm[i].sizey);
+        break;
+      case(ROMB):
+         j = testromb(objm[i].x,objm[i].y,objm[i].sizex,objm[i].sizey);
+        break;
+      case(PARL):
+         j = testparl(objm[i].x,objm[i].y,objm[i].sizex,objm[i].sizey);
+         break;
+      }
+      if(j)
+      {
+         actoa = 1;
+         typeoa = 1;
+         nomobj = i;
+         return;
+      }
+   }
+   return;
+}
+
+int inpactobj()
+{
+   int a;
+   if(kbhit())
+   {
+      a = getch();
+      if(a == 0)
+      {
+         a = getch();
+         switch(a)
+         {
+            case(KEY_LEFT):
+               objm[nomobj].x--;
+               return(1);
+            case(KEY_RIGHT):
+               objm[nomobj].x++;
+               return(1);
+            case(KEY_UP):
+               objm[nomobj].y--;
+               return(1);
+            case(KEY_DOWN):
+               objm[nomobj].y++;
+               return(1);
+         }
+      }
+   }
+   if(mousex() >= 15 && mousey() >= 320 && mousex() <= 61 && mousey() <= 341 && mousebuttons() == 1)
+         {
+            if(objm[nomobj].sizex > 50) objm[nomobj].sizex--;
+               return(1);
+         }
+         if(mousex() >= 94 && mousey() >= 320 && mousex() <= 140 && mousey() <= 341 && mousebuttons() == 1)
+         {
+            if(objm[nomobj].sizex < 500 && objm[nomobj].sizex + objm[nomobj].x <= 788) objm[nomobj].sizex++;
+               return(1);
+         }
+         if(mousex() >= 15 && mousey() >= 374 && mousex() <= 61 && mousey() <= 395 && mousebuttons() == 1)
+         {
+            if(objm[nomobj].sizey > 50) objm[nomobj].sizey--;
+               return(1);
+         }
+         if(mousex() >= 94 && mousey() >= 374 && mousex() <= 140 && mousey() <= 395 && mousebuttons() == 1)
+         {
+            if(objm[nomobj].sizey < 500 && objm[nomobj].sizey + objm[nomobj].y <= 588) objm[nomobj].sizey++;
+               return(1);
+         }
+         if(mousex() >= 153 && mousey() >= 59 && mousex() <= 788 && mousey() <= 588 && mousebuttons() == 2)
+         {
+            objm[nomobj].x = mousex() - objm[nomobj].sizex/2;
+            objm[nomobj].y = mousey() - objm[nomobj].sizey/2;
+            if(objm[nomobj].x < 153) objm[nomobj].x = 153;
+            if(objm[nomobj].y < 59) objm[nomobj].y = 59;
+            if(objm[nomobj].x + objm[nomobj].sizex > 788) objm[nomobj].x = 788 - objm[nomobj].sizex;
+            if(objm[nomobj].y + objm[nomobj].sizey > 588) objm[nomobj].y = 588 - objm[nomobj].sizey;
+            return (1);
+         }
+   return(0);
+}
+
+
 
 void Setup()
 {
@@ -254,7 +466,23 @@ void Setup()
 
 void Input()
 {
-   
+   if(actoa == 1)
+   {
+      if(typeoa == 1)
+      {
+         if(inpactobj() == 1) return;
+      }
+      else if(typeoa == 2)
+      {
+         ;
+      }
+   }
+   testallobjects();
+  if(buttonobj(1,77,150,113,addobject,KVAD) == 1) return;
+  if(buttonobj(1,115,150,153,addobject,PARL)) return;
+  if(buttonobj(1,155,150,193,addobject,ROMB)) return;
+  if(buttonobj(1,195,150,234,addobject,SKVAD)) return;
+  if(button(1,236,150,273,addarrow)) return;
 }
 
 void Draw()
@@ -263,7 +491,8 @@ void Draw()
    setactivepage(p);
    clearviewport();
    putimage(0, 0, MAIN, OR_PUT);
-   arr(getmaxx()/2,getmaxy()/2,mousex(),mousey(),1);
+   drawallobjects();
+   drawallarrows();
    setvisualpage(p);
 }
 
