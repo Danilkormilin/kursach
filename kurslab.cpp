@@ -34,7 +34,7 @@ IMAGE* MAIN;
 
 void skvad(int x, int y, int sizex, int sizey, int tcol) //скругленный квадрат
 {
-   if(tcol = 1)
+   if(tcol == 1)
       setcolor(RED);
    else
       setcolor(BLACK);
@@ -64,7 +64,7 @@ int testskvad(int x, int y, int sx, int sy)
 
 void kvad(int x, int y, int sizex, int sizey, int tcol)
 {
-    if(tcol = 1)
+    if(tcol == 1)
       setcolor(RED);
    else
       setcolor(BLACK);
@@ -85,7 +85,7 @@ int testkvad(int x, int y, int sx, int sy)
 
 void romb(int x, int y, int sizex, int sizey, int tcol)
 {
-   if(tcol = 1)
+   if(tcol == 1)
       setcolor(RED);
    else
       setcolor(BLACK);
@@ -109,7 +109,7 @@ int testromb(int x, int y, int sx, int sy)
 
 void parl(int x, int y, int sizex, int sizey, int tcol)
    {
-      if(tcol = 1)
+      if(tcol == 1)
       setcolor(RED);
    else
       setcolor(BLACK);
@@ -134,8 +134,8 @@ void parl(int x, int y, int sizex, int sizey, int tcol)
 void arr(int x1,int y1, int x2, int y2,int tcol)
 {
    double fi;
-   if(tcol = 1)
-      setcolor(RED);
+   if(tcol == 1)
+    setcolor(RED);
    else
       setcolor(BLACK);
    line(x1,y1,x2,y2);
@@ -172,22 +172,72 @@ void arr(int x1,int y1, int x2, int y2,int tcol)
    }
    else if(dx > 0)
    {
-         fi =acos(-1) + atan((double)dy/(double)dx);
-         a[2] = b[2] = x2 + int(cos(fi)* 5);
-         a[3] = b[3] = y2+ int(sin(fi)* 5);
+      fi =acos(-1) + atan((double)dy/(double)dx);
+      a[2] = b[2] = x2 + int(cos(fi)* 5);
+      a[3] = b[3] = y2+ int(sin(fi)* 5);
    }
    else
    {
       fi =atan((double)dy/(double)dx);
-         a[2] = b[2] = x2 + int(cos(fi)* 5);
-         a[3] = b[3] = y2+ int(sin(fi)* 5);
+      a[2] = b[2] = x2 + int(cos(fi)* 5);
+      a[3] = b[3] = y2+ int(sin(fi)* 5);
    }
    a[4] = x2 + int(cos(fi + acos(-1)/6)* 10);
    b[4] = x2 + int(cos(fi- acos(-1)/6)* 10);
    a[5] = y2 + int(sin(fi + acos(-1)/6)* 10);
    b[5] = y2 + int(sin(fi- acos(-1)/6)* 10);
+    if(tcol == 1)
+    setfillstyle(SOLID_FILL,RED);
+   else
+      setfillstyle(SOLID_FILL,BLACK);
    fillpoly(3, a);
    fillpoly(3, b);
+}
+
+void drawarrow(arrow arro, int tcol)
+{
+   arr(arro.x1,arro.y1,arro.x2,arro.y2,tcol);
+}
+
+void drawobj(obj ob,int tcol)
+{
+   switch(ob.t)
+   {
+      case(KVAD):
+         kvad(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
+         break
+      case(SKVAD):
+         skvad(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
+        break
+      case(ROMB):
+         romb(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
+        break
+      case(PARL):
+         parl(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
+         break
+   }
+}
+
+void drawallobjects()
+{
+   for(int i = 0; i < kolobj; i++)
+   {
+      if(i == nomobj)
+         drowobj(objm[i],1);
+      else
+         drowobj(objm[i],0);
+   }
+}
+
+void drowallarrows()
+{
+   for(int i = 0; i < kolarr;i++)
+   {
+      if(i == nomobj)
+         drowobj(objm[i],1);
+      else
+         drowobj(objm[i],0);
+   }
 }
 
 void Setup()
@@ -213,7 +263,7 @@ void Draw()
    setactivepage(p);
    clearviewport();
    putimage(0, 0, MAIN, OR_PUT);
-   arr(getmaxx()/2,getmaxy()/2,mousex(),mousey(),0);
+   arr(getmaxx()/2,getmaxy()/2,mousex(),mousey(),1);
    setvisualpage(p);
 }
 
