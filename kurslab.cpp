@@ -48,7 +48,7 @@ void skvad(int x, int y, int sizex, int sizey, int tcol) //скругленный квадрат
    arc(x + sizex - 10, y + 10, 0, 90, 10);
 }
 
-int testskvad(int x, int y, int sx, int sy)
+int testskvad(int x, int y, int sx, int sy) // проверка нажатия на скругленный квадрат
 {
    if(((mousex()>=x && mousex()<=x+sx && mousey() >= y+10 && mousey() <= y + sy - 10) || 
       (mousex()>=x + 10 && mousex()<=x+sx - 10 && mousey() >= y && mousey() <= y + sy) || 
@@ -62,7 +62,7 @@ int testskvad(int x, int y, int sx, int sy)
    else return (0);
 }
 
-void kvad(int x, int y, int sizex, int sizey, int tcol)
+void kvad(int x, int y, int sizex, int sizey, int tcol) // квадрат
 {
     if(tcol == 1)
       setcolor(RED);
@@ -74,7 +74,7 @@ void kvad(int x, int y, int sizex, int sizey, int tcol)
    line(x,y + sizey,x+sizex,y + sizey);
 }
 
-int testkvad(int x, int y, int sx, int sy)
+int testkvad(int x, int y, int sx, int sy) // проверка нажатия на квадрат
 {
    if ((mousex()>=x && mousex()<=x+sx && mousey() >= y && mousey() <= y + sy) && (mousebuttons() == 1))
       {
@@ -83,7 +83,7 @@ int testkvad(int x, int y, int sx, int sy)
    else return (0);
 }
 
-void romb(int x, int y, int sizex, int sizey, int tcol)
+void romb(int x, int y, int sizex, int sizey, int tcol) // ромб
 {
    if(tcol == 1)
       setcolor(RED);
@@ -95,8 +95,9 @@ void romb(int x, int y, int sizex, int sizey, int tcol)
    line(x + sizex/2,y + sizey,x,y + sizey/2);
 }
 
-void tes(int x, int y, int sx, int sy)
-{int m= 0, o = 1000;
+void tes(int x, int y, int sx, int sy) // проверка ромба (в финале убрать)
+{
+   int m= 0, o = 1000;
    setcolor(BLUE);
    line(0,(double)y+(double)sy/2 - ((double)m*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx,1000,(double)y+(double)sy/2 - ((double)o*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx);
    setcolor(GREEN);
@@ -108,13 +109,8 @@ void tes(int x, int y, int sx, int sy)
    return;
 }
 
-int testromb(int x, int y, int sx, int sy)
+int testromb(int x, int y, int sx, int sy) // проверка нажатия на ромб
 {
-   //setcolor(BLUE);
-  // line(0,(double)y+(double)sy/2 - ((double)x*(double)sy)/(double)sx,1000,(double)y+(double)sy/2 - (1000*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx);
- //  line(0,(double)y+(double)sy/2 - ((double)x*(double)sy)/(double)sx +(double)sy,1000,(double)y+(double)sy/2 - (1000*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy);
-  // line(0,(double)y-(double)sy/2 + ((double)x*(double)sy)/(double)sx,1000,(double)y-(double)sy/2 + (1000*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx);
- //  line(0,(double)y-(double)sy/2 + ((double)x*(double)sy)/(double)sx + (double)sy,1000,(double)y-(double)sy/2 + (1000*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx + (double)sy);
    if((mousey() >= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx) &&
       (mousey() <= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy) &&
    (mousey() >= (double)y-(double)sy/2 + ((double)mousex()*(double)sy)/(double)sx - ((double)x*(double)sy)/(double)sx) &&
@@ -125,7 +121,7 @@ int testromb(int x, int y, int sx, int sy)
    else return (0);
 }
 
-void parl(int x, int y, int sizex, int sizey, int tcol)
+void parl(int x, int y, int sizex, int sizey, int tcol) //паралелограм
    {
       if(tcol == 1)
       setcolor(RED);
@@ -137,7 +133,7 @@ void parl(int x, int y, int sizex, int sizey, int tcol)
    line(x,y + sizey,x+sizex - 10,y + sizey);
    }
    
-   int testparl(int x, int y, int sx, int sy)
+int testparl(int x, int y, int sx, int sy) // проверка нажатия на паралелограмм
 {
    if((mousey() >= y) &&
       (mousey() <= y + sy) &&
@@ -149,7 +145,7 @@ void parl(int x, int y, int sizex, int sizey, int tcol)
    else return (0);
 }
 
-void arr(int x1,int y1, int x2, int y2,int tcol)
+void arr(int x1,int y1, int x2, int y2,int tcol) // стрелка
 {
    double fi;
    if(tcol == 1)
@@ -212,38 +208,118 @@ void arr(int x1,int y1, int x2, int y2,int tcol)
    fillpoly(3, b);
 }
 
-void drawarrow(arrow arro, int tcol)
+void drawarrow(arrow arro, int tcol) // рисовани стрелки с текстом, кругами
 {
    arr(arro.x1,arro.y1,arro.x2,arro.y2,tcol);
    int dx = arro.x2 - arro.x1, dy = arro.y2 - arro.y1;
    setbkmode(TRANSPARENT);
    setcolor(BLACK);
    settextjustify(LEFT_TEXT,TOP_TEXT);
-   if(dx > 0)
+   if(dx == 0)
    {
-       if(dy>=0)
-      {
-         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 - 5,arro.text);
-      }
-      else
-      {
-         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 10,arro.text);
-      }
+      outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 5,arro.text);
+   }
+   else if((double)dy/(double)dx < 0)
+   {
+       outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 5,arro.text);
    }
    else
    {
-       if(dy>=0)
+       outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 - 15,arro.text);
+   }
+   if(tcol)
+   {
+      if(typearrow == 1)
       {
-         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 - 5,arro.text);
+        setfillstyle(SOLID_FILL,RED);
+         fillellipse(arro.x1, arro.y1, 5,5);
+        setfillstyle(SOLID_FILL,BLUE);
+         fillellipse((arro.x1 + arro.x2)/2, (arro.y1 + arro.y2)/2, 5,5);
+        setfillstyle(SOLID_FILL,BLUE);
+         fillellipse(arro.x2, arro.y2, 5,5);
+      }
+      else if (typearrow == 2)
+      {
+         setfillstyle(SOLID_FILL,BLUE);
+         fillellipse(arro.x1, arro.y1, 5,5);
+        setfillstyle(SOLID_FILL,RED);
+         fillellipse((arro.x1 + arro.x2)/2, (arro.y1 + arro.y2)/2, 5,5);
+        setfillstyle(SOLID_FILL,BLUE);
+         fillellipse(arro.x2, arro.y2, 5,5);
       }
       else
       {
-         outtextxy((arro.x1 + arro.x2)/2 + 5,(arro.y1 + arro.y2)/2 + 10,arro.text);
+         setfillstyle(SOLID_FILL,BLUE);
+         fillellipse(arro.x1, arro.y1, 5,5);
+        setfillstyle(SOLID_FILL,BLUE);
+         fillellipse((arro.x1 + arro.x2)/2, (arro.y1 + arro.y2)/2, 5,5);
+        setfillstyle(SOLID_FILL,RED);
+         fillellipse(arro.x2, arro.y2, 5,5);
       }
    }
 }
 
-void drawobj(obj ob,int tcol)
+int testline(int x1, int x2, int y1, int y2)   // проверка нажатия на линию стрелки
+{
+   if(x1 == x2)
+   {
+      if(mousex() == x1 && mousey() <= fmax((double)y1, (double)y2) && mousey() >= fmin((double)y1, (double)y2)) return (1);
+      else return (0);
+   }
+   else if (y1 == y2)
+   {
+      if(mousey() == y1 && mousex() <= fmax((double)x1, (double)x2) && mousex() >= fmin((double)x1, (double)x2)) return (1);
+      else return (0);
+   }
+   else
+   {
+      if(mousex() <= fmax((double)x1, (double)x2) && mousex() >= fmin((double)x1, (double)x2) && 
+         (double)mousey() <= (((double)mousex() - (double)x1)*((double)y2 - (double)y1))/((double)x2 - (double)x1) + (double)y1 + 1 && 
+         (double)mousey() >= (((double)mousex() - (double)x1)*((double)y2 - (double)y1))/((double)x2 - (double)x1) + (double)y1 - 1) return (1);
+      else return (0);
+   }
+   return(0);
+}
+
+int testarr(int x1, int x2, int y1, int y2)     //проверка нажатия на стрелку
+{
+   if(pow(mousex() - x1,2) + pow(mousey() - y1,2) <= 25 && mousebuttons() == 1) return (1);
+   else if(pow(mousex() - x2,2) + pow(mousey() - y2,2) <= 25 && mousebuttons() == 1) return (3);
+   else if((pow(mousex() - (x2 + x1)/2,2) + pow(mousey() - (y2 + y1)/2,2) <= 25  || testline(x1,x2,y1,y2)) && mousebuttons() == 1) return (2);
+   return (0);
+}
+
+void testallarrows()    //проверка нажатия на все стрелки
+{
+   for(int i = 0; i < kolarr; i++)
+   {
+      switch(testarr(arrm[i].x1,arrm[i].x2,arrm[i].y1,arrm[i].y2))
+      {
+         case (1):
+            actoa = 1;
+            typeoa = 2;
+            nomarr = i;
+            typearrow = 1;
+            return;
+         case (2):
+            actoa = 1;
+         typeoa = 2;
+         nomarr = i;
+         typearrow = 2;
+            return;
+         case (3):
+            actoa = 1;
+         typeoa = 2;
+         nomarr = i;
+         typearrow = 3;
+            return;
+         case (0):
+            break;
+      }
+   }
+}
+
+void drawobj(obj ob,int tcol)   //рисование объекта
 {
    switch(ob.t)
    {
@@ -255,7 +331,6 @@ void drawobj(obj ob,int tcol)
         break;
       case(ROMB):
          romb(ob.x,ob.y,ob.sizex,ob.sizey,tcol);
-         //tes(ob.x,ob.y,ob.sizex,ob.sizey);
          //tes(ob.x,ob.y,ob.sizex,ob.sizey);
         break;
       case(PARL):
@@ -271,29 +346,29 @@ void drawobj(obj ob,int tcol)
    outtextxy(ob.x + ob.sizex/2, ob.y + ob.sizey/2 + 5,a);
 }
 
-void drawallobjects()
+void drawallobjects()   //рисование всех оюъектов
 {
    for(int i = 0; i < kolobj; i++)
    {
-      if(i == nomobj  && actoa && typeoa == 1)
+      if(i == nomobj  && actoa == 1 && typeoa == 1)
          drawobj(objm[i],1);
       else
          drawobj(objm[i],0);
    }
 }
 
-void drawallarrows()
+void drawallarrows()    //рисование всех стрелок
 {
    for(int i = 0; i < kolarr;i++)
    {
-      if(i == nomarr && actoa && typeoa == 2)
+      if(i == nomarr && actoa == 1 && typeoa == 2)
          drawarrow(arrm[i],1);
       else
          drawarrow(arrm[i],0);
    }
 }
 
-void addobject(objtype t)
+void addobject(objtype t)      // добавление объекта
 {
    if(kolobj < 100)
    {
@@ -315,7 +390,7 @@ void addobject(objtype t)
    }
 }
 
-void addarrow()
+void addarrow() //добавление стрелки
 {
    if(kolarr < 100)
    {
@@ -324,6 +399,7 @@ void addarrow()
       typeoa = 2;
       kolarr++;
       nomarr = kolarr-1;
+      typearrow = 2;
       arrm[nomarr].x1 = getmaxx()/2;
       arrm[nomarr].y1 = getmaxy()/2;
       arrm[nomarr].x2 = getmaxx()/2+100;
@@ -337,7 +413,7 @@ void addarrow()
    }
 }
 
-int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype t)
+int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype t)     //кнопка для добавления объектов (вызова функции с параметром objtype)
 {
    if(mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
    {
@@ -349,7 +425,7 @@ int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype
    else return (0);
 }
 
-int button(int left,int top, int right,int bottom,void (*f)())
+int button(int left,int top, int right,int bottom,void (*f)())  //кнопка (выхов функции ()(void)
 {
    if(mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
    {
@@ -360,7 +436,7 @@ int button(int left,int top, int right,int bottom,void (*f)())
    else return (0);
 }
 
-void testallobjects()
+void testallobjects()   //проверка нажатия на все объекты
 {
    int j;
    for(int i = 0; i < kolobj; i++)
@@ -391,7 +467,7 @@ void testallobjects()
    return;
 }
 
-int inpactobj()
+int inpactobj() //работа с активным объектом
 {
    int a;
    if(kbhit())
@@ -403,16 +479,16 @@ int inpactobj()
          switch(a)
          {
             case(KEY_LEFT):
-               objm[nomobj].x--;
+               if(objm[nomobj].x > 153)objm[nomobj].x--;
                return(1);
             case(KEY_RIGHT):
-               objm[nomobj].x++;
+               if(objm[nomobj].x < 788)objm[nomobj].x++;
                return(1);
             case(KEY_UP):
-               objm[nomobj].y--;
+               if(objm[nomobj].y > 59)objm[nomobj].y--;
                return(1);
             case(KEY_DOWN):
-               objm[nomobj].y++;
+               if(objm[nomobj].y < 588)objm[nomobj].y++;
                return(1);
          }
       }
@@ -450,9 +526,195 @@ int inpactobj()
    return(0);
 }
 
+void testobjtoarr(int* x, int* y)       //проверка краев объектов для движения стрело (магнитность)
+{
+   int leftx, lefty, rightx, righty,botx, boty,topx, topy;
+   for(int i = 0; i < kolobj; i++)
+   {
+      botx = objm[i].x + objm[i].sizex/2;
+      topx = objm[i].x + objm[i].sizex/2;
+      boty = objm[i].y + objm[i].sizey;
+      topy = objm[i].y;
+      if(objm[i].t == PARL)
+      {
+         leftx = objm[i].x+ 5;
+         rightx = objm[i].x + objm[i].sizex - 5;
+         lefty= (double)objm[i].y - ((double)(leftx)*(double)objm[i].sizey)/(double)10 + ((double)objm[i].x*(double)objm[i].sizey)/(double)10 + (double)objm[i].sizey;
+         righty = (double)objm[i].y - ((double)(rightx)*(double)objm[i].sizey)/(double)10 + ((double)objm[i].x*(double)objm[i].sizey)/(double)10 + (double)objm[i].sizey*(double)objm[i].sizex/(double)10;
+      }
+      else
+      {
+         leftx = objm[i].x;
+         rightx = objm[i].x + objm[i].sizex;
+         lefty = objm[i].y + objm[i].sizey/2;
+         righty = objm[i].y + objm[i].sizey/2;
+      }
+      if(pow(mousex() - botx,2) + pow(mousey() - boty,2) <= 25)
+      {
+         *x = botx;
+        *y = boty;
+         return;
+      }
+      else if(pow(mousex() - topx,2) + pow(mousey() - topy,2) <= 25)
+      {
+         *x = topx;
+         *y = topy;
+         return;
+      }
+      else if(pow(mousex() - leftx,2) + pow(mousey() - lefty,2) <= 25)
+      {
+         *x = leftx;
+         *y = lefty;
+         return;
+      }
+      else if(pow(mousex() - rightx,2) + pow(mousey() - righty,2) <= 25)
+      {
+         *x = rightx;
+         *y = righty;
+         return;
+      }
+   }
+   return;
+}
 
+void testarrtoarr(int* x, int* y)       //проверка концов стрелок для движения стрелок
+{
+   int stx,sty,fx,fy;
+   for(int i = 0; i < kolarr; i++)
+   {
+      if(i != nomarr)
+      {
+      stx = arrm[i].x1;
+      sty = arrm[i].y1;
+      fx = arrm[i].x2;
+      fy = arrm[i].y2;
+      if(pow(mousex() - stx,2) + pow(mousey() - sty,2) <= 25)
+         {
+            *x = stx;
+            *y = sty;
+            return;
+         }
+         else if(pow(mousex() - fx,2) + pow(mousey() - fy,2) <= 25)
+         {
+            *x = fx;
+            *y = fy;
+            return;
+         }
+      }
+   }
+   return;
+}
 
-void Setup()
+int movearr(int* x, int *y)     //движение конца стрелки
+{
+   int a;
+      if(kbhit())
+      {
+         a = getch();
+         if(a == 0)
+         {
+            a = getch();
+            switch(a)
+         {
+            case(KEY_LEFT):
+               if((*x) > 153) (*x)--;
+               return(1);
+            case(KEY_RIGHT):
+               if((*x) < 788) (*x)++;
+               return(1);
+            case(KEY_UP):
+               if((*y) > 59) (*y)--;
+               return(1);
+            case(KEY_DOWN):
+               if((*y) < 588) (*y)++;
+               return(1);
+         }
+         }
+      }
+      if(mousex() >= 153 && mousey() >= 59 && mousex() <= 788 && mousey() <= 588 && mousebuttons() == 2)
+         {
+            *x = mousex();
+            *y = mousey();
+            testarrtoarr(x,y);
+            testobjtoarr(x,y);
+            return (1);
+         }
+   return(0);
+}
+
+int movefullarr(int* x1, int* x2, int* y1, int* y2)       //движение всей стрелки
+{
+   int X1 = *x1,X2 = *x2,Y1 = *y1,Y2 = *y2;
+   int c1x,cx,c1y,cy,dx1,dx2,dy1,dy2,
+   maxx = (int)fmax((double)X1,(double)X2),
+   minx = (int)fmin((double)X1,(double)X2),
+   maxy = (int)fmax((double)Y1,(double)Y2),
+   miny = (int)fmin((double)Y1,(double)Y2);
+   c1x = cx = (X1+X2)/2;
+   c1y = cy = (Y1+Y2)/2;
+   dx1 = X1 - cx;
+   dx2 = X2 - cx;
+   dy1 = Y1 - cy;
+   dy2 = Y2 - cy;
+   int a;
+      if(kbhit())
+      {
+         a = getch();
+         if(a == 0)
+         {
+            a = getch();
+            switch(a)
+         {
+            case(KEY_LEFT):
+               if((minx) > 153) cx--;
+               break;
+            case(KEY_RIGHT):
+               if((maxx) < 788) cx++;
+               break;
+            case(KEY_UP):
+               if((miny) > 59) cy--;
+                break;
+            case(KEY_DOWN):
+               if((maxy) < 588) cy++;
+                break;
+         }
+         }
+      }
+      if(mousex() >= 153 && mousey() >= 59 && mousex() <= 788 && mousey() <= 588 && mousebuttons() == 2)
+         {
+            cx = mousex();
+            cy = mousey();
+            if(cx - (c1x - minx) < 153) cx = 153 + (c1x - minx);
+            if(cy - (c1y - miny) < 59) cy = 59 + (c1y - miny);
+            if(cx + (maxx - c1x) > 788) cx = 788 - (maxx - c1x);
+            if(cy + (maxy - c1y) > 588) cy = 588 - (maxy - c1y);
+         }
+      (*x1) = cx + dx1;
+      (*x2) = cx + dx2;
+      (*y1) = cy + dy1;
+      (*y2) = cy + dy2;
+         if(cx != c1x || cy != c1y) return (1);
+         else return (0);
+}
+
+int inpactarrow()       //работа с активной стрелкой
+{
+   if(typearrow == 1)
+   {
+         if(movearr(&arrm[nomarr].x1,&arrm[nomarr].y1)) return(1);
+   }
+   else if(typearrow == 2)
+   {
+      if(movefullarr(&arrm[nomarr].x1,&arrm[nomarr].x2,&arrm[nomarr].y1,&arrm[nomarr].y2)) return (1);
+   }
+   else if(typearrow == 3)
+   {
+        if(movearr(&arrm[nomarr].x2,&arrm[nomarr].y2)) return(1);
+   }
+   return (0);
+}
+
+void Setup()    //установка стартовых параметров
 {
    actoa =0;
    typeoa = 0;
@@ -464,7 +726,7 @@ void Setup()
    MAIN = loadBMP("MAIN.jpg");
 }
 
-void Input()
+void Input() // ввод
 {
    if(actoa == 1)
    {
@@ -474,10 +736,12 @@ void Input()
       }
       else if(typeoa == 2)
       {
-         ;
+         if(inpactarrow() == 1) return;
       }
    }
    testallobjects();
+   testallarrows();
+   while(kbhit()) getch();
   if(buttonobj(1,77,150,113,addobject,KVAD) == 1) return;
   if(buttonobj(1,115,150,153,addobject,PARL)) return;
   if(buttonobj(1,155,150,193,addobject,ROMB)) return;
@@ -485,7 +749,7 @@ void Input()
   if(button(1,236,150,273,addarrow)) return;
 }
 
-void Draw()
+void Draw()     //рисование
 {
    p = 1 - p;
    setactivepage(p);
@@ -496,7 +760,7 @@ void Draw()
    setvisualpage(p);
 }
 
-int main()
+int main()      //программа
 {
    initwindow(788,588);
    Setup();
