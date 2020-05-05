@@ -24,8 +24,8 @@ typedef struct arrow
 int inputtextmode,temptexti;
 char temptext[101],temptextbuff[101],Sizex[101],Sizey[101],
      savebmp[104] = "Save.bmp\0",
-                    savetxt[104] = "Save.txt\0",
-                                   opentxt[104] = "Open.txt\0";
+                    savetxt[104] = "File.txt\0",
+                                   opentxt[104] = "File.txt\0";
 int END = 0;
 int actoa = 0;
 int p = 0,
@@ -36,8 +36,18 @@ obj objm[100];
 arrow arrm[100];
 
 IMAGE *MAIN;
+IMAGE *Im1;
+IMAGE *Im2;
+IMAGE *Im3;
+IMAGE *Im4;
+IMAGE *Im5;
+IMAGE *Im6;
+IMAGE *SaveBMP;
 
-void skvad(int x, int y, int sizex, int sizey, int tcol) //скругленный квадрат
+FILE *SaveTXT;
+FILE *OpenTXT;
+
+void skvad(int x, int y, int sizex, int sizey, int tcol) //nedoaeliiue earadrn
 {
    if (tcol == 1)
       setcolor(RED);
@@ -53,7 +63,7 @@ void skvad(int x, int y, int sizex, int sizey, int tcol) //скругленный квадрат
    arc(x + sizex - 10, y + 10, 0, 90, 10);
 }
 
-int testskvad(int x, int y, int sx, int sy) // проверка нажатия на скругленный квадрат
+int testskvad(int x, int y, int sx, int sy) // ddialder ircrnc? ir nedoaeliiue earadrn
 {
    if (((mousex()>=x && mousex()<=x+sx && mousey() >= y+10 && mousey() <= y + sy - 10) ||
          (mousex()>=x + 10 && mousex()<=x+sx - 10 && mousey() >= y && mousey() <= y + sy) ||
@@ -67,7 +77,7 @@ int testskvad(int x, int y, int sx, int sy) // проверка нажатия на скругленный к
    else return (0);
 }
 
-void kvad(int x, int y, int sizex, int sizey, int tcol) // квадрат
+void kvad(int x, int y, int sizex, int sizey, int tcol) // earadrn
 {
    if (tcol == 1)
       setcolor(RED);
@@ -79,7 +89,7 @@ void kvad(int x, int y, int sizex, int sizey, int tcol) // квадрат
    line(x,y + sizey,x+sizex,y + sizey);
 }
 
-int testkvad(int x, int y, int sx, int sy) // проверка нажатия на квадрат
+int testkvad(int x, int y, int sx, int sy) // ddialder ircrnc? ir earadrn
 {
    if ((mousex()>=x && mousex()<=x+sx && mousey() >= y && mousey() <= y + sy) && (mousebuttons() == 1))
    {
@@ -88,7 +98,7 @@ int testkvad(int x, int y, int sx, int sy) // проверка нажатия на квадрат
    else return (0);
 }
 
-void romb(int x, int y, int sizex, int sizey, int tcol) // ромб
+void romb(int x, int y, int sizex, int sizey, int tcol) // diea
 {
    if (tcol == 1)
       setcolor(RED);
@@ -100,7 +110,7 @@ void romb(int x, int y, int sizex, int sizey, int tcol) // ромб
    line(x + sizex/2,y + sizey,x,y + sizey/2);
 }
 
-void tes(int x, int y, int sx, int sy) // проверка ромба (в финале убрать)
+void tes(int x, int y, int sx, int sy) // ddialder diear (a ocirel oadrnu)
 {
    int m= 0, o = 1000;
    setcolor(BLUE);
@@ -114,7 +124,7 @@ void tes(int x, int y, int sx, int sy) // проверка ромба (в финале убрать)
    return;
 }
 
-int testromb(int x, int y, int sx, int sy) // проверка нажатия на ромб
+int testromb(int x, int y, int sx, int sy) // ddialder ircrnc? ir diea
 {
    if ((mousey() >= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx) &&
          (mousey() <= (double)y+(double)sy/2 - ((double)mousex()*(double)sy)/(double)sx + ((double)x*(double)sy)/(double)sx +(double)sy) &&
@@ -126,7 +136,7 @@ int testromb(int x, int y, int sx, int sy) // проверка нажатия на ромб
    else return (0);
 }
 
-void parl(int x, int y, int sizex, int sizey, int tcol) //паралелограм
+void parl(int x, int y, int sizex, int sizey, int tcol) //drdreleiadre
 {
    if (tcol == 1)
       setcolor(RED);
@@ -138,7 +148,7 @@ void parl(int x, int y, int sizex, int sizey, int tcol) //паралелограм
    line(x,y + sizey,x+sizex - 10,y + sizey);
 }
 
-int testparl(int x, int y, int sx, int sy) // проверка нажатия на паралелограмм
+int testparl(int x, int y, int sx, int sy) // ddialder ircrnc? ir drdreleiadree
 {
    if ((mousey() >= y) &&
          (mousey() <= y + sy) &&
@@ -150,7 +160,7 @@ int testparl(int x, int y, int sx, int sy) // проверка нажатия на паралелограмм
    else return (0);
 }
 
-void arr(int x1,int y1, int x2, int y2,int tcol) // стрелка
+void arr(int x1,int y1, int x2, int y2,int tcol) // nndleer
 {
    double fi;
    if (tcol == 1)
@@ -213,7 +223,7 @@ void arr(int x1,int y1, int x2, int y2,int tcol) // стрелка
    fillpoly(3, b);
 }
 
-void drawarrow(arrow arro, int tcol) // рисовани стрелки с текстом, кругами
+void drawarrow(arrow arro, int tcol) // dcniaric nndleec n nlennie, edoarec
 {
    arr(arro.x1,arro.y1,arro.x2,arro.y2,tcol);
    int dx = arro.x2 - arro.x1, dy = arro.y2 - arro.y1;
@@ -264,7 +274,7 @@ void drawarrow(arrow arro, int tcol) // рисовани стрелки с текстом, кругами
    }
 }
 
-int testline(int x1, int x2, int y1, int y2)   // проверка нажатия на линию стрелки
+int testline(int x1, int x2, int y1, int y2)   // ddialder ircrnc? ir ecict nndleec
 {
    if (x1 == x2)
    {
@@ -286,7 +296,7 @@ int testline(int x1, int x2, int y1, int y2)   // проверка нажатия на линию стре
    return (0);
 }
 
-int testarr(int x1, int x2, int y1, int y2)     //проверка нажатия на стрелку
+int testarr(int x1, int x2, int y1, int y2)     //ddialder ircrnc? ir nndleeo
 {
    if (pow(mousex() - x1,2) + pow(mousey() - y1,2) <= 25 && mousebuttons() == 1) return (1);
    else if (pow(mousex() - x2,2) + pow(mousey() - y2,2) <= 25 && mousebuttons() == 1) return (3);
@@ -294,7 +304,7 @@ int testarr(int x1, int x2, int y1, int y2)     //проверка нажатия на стрелку
    return (0);
 }
 
-void inputtext(char *a, int typ) //ввод текста
+void inputtext(char *a, int typ) //aaia nlennr
 {
    if (inputtextmode == 0)
    {
@@ -387,7 +397,7 @@ void inputtext(char *a, int typ) //ввод текста
       {
          if (s == BMP)
          {
-            if (temptexti<4 || a[temptexti - 1] != 'p' || a[temptexti - 2] != 'm' || a[temptexti - 1] != 'b' || a[temptexti - 1] != '.')
+            if (temptexti<4 || a[temptexti - 1] != 'p' || a[temptexti - 2] != 'm' || a[temptexti - 3] != 'b' || a[temptexti - 4] != '.')
             {
                a[temptexti] = '.';
                a[temptexti+1] = 'b';
@@ -398,7 +408,7 @@ void inputtext(char *a, int typ) //ввод текста
          }
          else
          {
-            if (temptexti<4 || a[temptexti - 1] != 't' || a[temptexti - 2] != 'x' || a[temptexti - 1] != 't' || a[temptexti - 1] != '.')
+            if (temptexti<4 || a[temptexti - 1] != 't' || a[temptexti - 2] != 'x' || a[temptexti - 3] != 't' || a[temptexti - 4] != '.')
             {
                a[temptexti] = '.';
                a[temptexti+1] = 't';
@@ -410,7 +420,7 @@ void inputtext(char *a, int typ) //ввод текста
       }
       else if (typ == 3)
       {
-         if (temptexti<4 || a[temptexti - 1] != 't' || a[temptexti - 2] != 'x' || a[temptexti - 1] != 't' || a[temptexti - 1] != '.')
+         if (temptexti<4 || a[temptexti - 1] != 't' || a[temptexti - 2] != 'x' || a[temptexti - 3] != 't' || a[temptexti - 4] != '.')
          {
             a[temptexti] = '.';
             a[temptexti+1] = 't';
@@ -425,7 +435,7 @@ void inputtext(char *a, int typ) //ввод текста
    /***********************************************************************************************************************************************************************************************/
 }
 
-void testallarrows()    //проверка нажатия на все стрелки
+void testallarrows()    //ddialder ircrnc? ir anl nndleec
 {
    for (int i = 0; i < kolarr; i++)
    {
@@ -455,7 +465,7 @@ void testallarrows()    //проверка нажатия на все стрелки
    }
 }
 
-void drawobj(obj ob,int tcol)   //рисование объекта
+void drawobj(obj ob,int tcol)   //dcniaricl iaulenr
 {
    switch (ob.t)
    {
@@ -482,7 +492,7 @@ void drawobj(obj ob,int tcol)   //рисование объекта
    outtextxy(ob.x + ob.sizex/2, ob.y + ob.sizey/2 + 5,a);
 }
 
-void drawallobjects()   //рисование всех оюъектов
+void drawallobjects()   //dcniaricl anlo itulenia
 {
    for (int i = 0; i < kolobj; i++)
    {
@@ -493,7 +503,7 @@ void drawallobjects()   //рисование всех оюъектов
    }
 }
 
-void drawallarrows()    //рисование всех стрелок
+void drawallarrows()    //dcniaricl anlo nndleie
 {
    for (int i = 0; i < kolarr; i++)
    {
@@ -504,7 +514,7 @@ void drawallarrows()    //рисование всех стрелок
    }
 }
 
-void addobject(objtype t)      // добавление объекта
+void addobject(objtype t)      // aiaraelicl iaulenr
 {
    if (kolobj < 100)
    {
@@ -526,7 +536,7 @@ void addobject(objtype t)      // добавление объекта
    }
 }
 
-void addarrow() //добавление стрелки
+void addarrow() //aiaraelicl nndleec
 {
    if (kolarr < 100)
    {
@@ -540,7 +550,7 @@ void addarrow() //добавление стрелки
       arrm[nomarr].y1 = getmaxy()/2;
       arrm[nomarr].x2 = getmaxx()/2+100;
       arrm[nomarr].y2 = getmaxy()/2+100;
-      char a[101] = "Текст\0";
+      char a[101] = "\0";
       for (int i = 0 ; i < 101; i++)
       {
          arrm[nomarr].text[i] = a[i];
@@ -549,7 +559,7 @@ void addarrow() //добавление стрелки
    }
 }
 
-void dellarrow() //удаление стрелки
+void dellarrow() //oarelicl nndleec
 {
    for(int i = nomarr; i <kolarr - 1; i++)
    {
@@ -560,7 +570,7 @@ void dellarrow() //удаление стрелки
    typeoa = 0;
 }
 
-void dellobj() //удаление объекта
+void dellobj() //oarelicl iaulenr
 {
    for(int i = nomobj; i <kolobj - 1; i++)
    {
@@ -571,7 +581,173 @@ void dellobj() //удаление объекта
    typeoa = 0;
 }
 
-int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype t)     //кнопка для добавления объектов (вызова функции с параметром objtype)
+void create()
+{
+   actoa = 0;
+   typeoa = 0;
+   kolarr = 0;
+   kolobj = 0;
+}
+
+void readallobj()
+{
+   int temp;
+   char tt;
+   fscanf(OpenTXT,"%d%*c",&kolobj);
+   for(int i = 0 ; i < kolobj; i++)
+   {
+      fscanf(SaveTXT,"%d%*c",&objm[i].x);
+      fscanf(SaveTXT,"%d%*c",&objm[i].y);
+      fscanf(SaveTXT,"%d%*c",&objm[i].sizex);
+      fscanf(SaveTXT,"%d%*c",&objm[i].sizey);
+      fscanf(SaveTXT,"%d%*c",&temp);
+      switch(temp)
+      {
+         case(1):
+         objm[i].t = KVAD;
+            break;
+         case(2):
+         objm[i].t = SKVAD;
+            break;
+         case(3):
+         objm[i].t = ROMB;
+            break;
+         case(4):
+         objm[i].t = PARL;
+            break;
+      }
+      for(int j = 0; j < 101 ; j++)
+      {
+         fscanf(SaveTXT,"%c",&tt);
+         if(tt == '\n')
+         {
+            objm[i].text[j] = '\0';
+            break;
+         }      
+         objm[i].text[j] = tt;
+      }
+   }
+}
+
+void readallarr()
+{
+   char tt;
+   fscanf(OpenTXT,"%d%*c",&kolarr);
+   for(int i = 0 ; i < kolarr; i++)
+   {
+      fscanf(SaveTXT,"%d%*c",&arrm[i].x1);
+      fscanf(SaveTXT,"%d%*c",&arrm[i].x2);
+      fscanf(SaveTXT,"%d%*c",&arrm[i].y1);
+      fscanf(SaveTXT,"%d%*c",&arrm[i].y2);
+      for(int j = 0; j < 101 ; j++)
+      {
+         fscanf(SaveTXT,"%c",&tt);
+         if(tt == '\n')
+         {
+            arrm[i].text[j] = '\0';
+            break;
+         }      
+         arrm[i].text[j] = tt;
+      }
+   }
+}
+
+void open()
+{
+   actoa = 0;
+   typeoa = 0;
+   OpenTXT = fopen(opentxt,"r");
+   readallobj();
+   readallarr();
+   fclose(OpenTXT);
+}
+
+void savepicture()
+{
+   actoa = 0;
+   typeoa = 0;
+   SaveBMP = createimage(800,600);
+   getimage(153, 59, 787, 587,SaveBMP);
+   saveBMP(savebmp,SaveBMP);
+   freeimage(SaveBMP);
+}
+
+void saveallarr()
+{
+   fprintf(SaveTXT,"%d\n",kolarr);
+   for(int i = 0 ; i < kolarr; i++)
+   {
+      fprintf(SaveTXT,"%d\n",arrm[i].x1);
+      fprintf(SaveTXT,"%d\n",arrm[i].x2);
+      fprintf(SaveTXT,"%d\n",arrm[i].y1);
+      fprintf(SaveTXT,"%d\n",arrm[i].y2);
+      for(int j = 0; j < 101 ; j++)
+      {
+         if(arrm[i].text[j] == '\0')
+         {
+            fprintf(SaveTXT,"\n");
+            break;
+         }
+         fprintf(SaveTXT,"%c",arrm[i].text[j]);
+                     
+      }
+   }
+}
+
+void saveallobj()
+{
+   fprintf(SaveTXT,"%d\n",kolobj);
+   for(int i = 0 ; i < kolobj; i++)
+   {
+      fprintf(SaveTXT,"%d\n",objm[i].x);
+      fprintf(SaveTXT,"%d\n",objm[i].y);
+      fprintf(SaveTXT,"%d\n",objm[i].sizex);
+      fprintf(SaveTXT,"%d\n",objm[i].sizey);
+      switch(objm[i].t)
+      {
+         case(KVAD):
+            fprintf(SaveTXT,"1\n");
+            break;
+         case(SKVAD):
+             fprintf(SaveTXT,"2\n");
+            break;
+         case(ROMB):
+             fprintf(SaveTXT,"3\n");
+            break;
+         case(PARL):
+             fprintf(SaveTXT,"4\n");
+            break;
+      }
+      for(int j = 0; j < 101 ; j++)
+      {
+         if(objm[i].text[j] == '\0')
+         {
+            fprintf(SaveTXT,"\n");
+            break;
+         }      
+         fprintf(SaveTXT,"%c",objm[i].text[j]);
+               
+      }
+   }
+}
+
+void savetext()
+{
+   actoa = 0;
+   typeoa = 0;
+   SaveTXT = fopen(savetxt,"w");
+   saveallobj();
+   saveallarr();
+   fclose(SaveTXT);
+}
+
+void save()
+{
+   if(s == TXT) savetext();
+   else savepicture();
+}
+
+int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype t)     //eiider ae? aiaraelic? iaulenia (auciar ooieocc n drdrelndie objtype)
 {
    if (mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
    {
@@ -583,7 +759,7 @@ int buttonobj(int left,int top, int right,int bottom,void (*f)(objtype), objtype
    else return (0);
 }
 
-int button(int left,int top, int right,int bottom,void (*f)())  //кнопка (вызов функции ()(void))
+int button(int left,int top, int right,int bottom,void (*f)())  //eiider (aucia ooieocc ()(void))
 {
    if (mousex() >= left && mousex() <= right && mousey() >= top && mousey() <= bottom && mousebuttons() == 1)
    {
@@ -594,7 +770,7 @@ int button(int left,int top, int right,int bottom,void (*f)())  //кнопка (вызов 
    else return (0);
 }
 
-void testallobjects()   //проверка нажатия на все объекты
+void testallobjects()   //ddialder ircrnc? ir anl iaulenu
 {
    int j;
    for (int i = 0; i < kolobj; i++)
@@ -625,7 +801,7 @@ void testallobjects()   //проверка нажатия на все объекты
    return;
 }
 
-int inpactobj() //работа с активным объектом
+int inpactobj() //drainr n rencaiue iaulenie
 {
    int a;
    if (kbhit())
@@ -692,7 +868,7 @@ int inpactobj() //работа с активным объектом
    return (0);
 }
 
-void testobjtoarr(int *x, int *y)       //проверка краев объектов для движения стрело (магнитность)
+void testobjtoarr(int *x, int *y)       //ddialder edrla iaulenia ae? aacclic? nndlei (eraicniinnu)
 {
    int leftx, lefty, rightx, righty,botx, boty,topx, topy;
    for (int i = 0; i < kolobj; i++)
@@ -743,7 +919,7 @@ void testobjtoarr(int *x, int *y)       //проверка краев объектов для движения с
    return;
 }
 
-void testarrtoarr(int *x, int *y)       //проверка концов стрелок для движения стрелок
+void testarrtoarr(int *x, int *y)       //ddialder eiioia nndleie ae? aacclic? nndleie
 {
    int stx,sty,fx,fy;
    for (int i = 0; i < kolarr; i++)
@@ -771,7 +947,7 @@ void testarrtoarr(int *x, int *y)       //проверка концов стрелок для движения с
    return;
 }
 
-int movearr(int *x, int *y)     //движение конца стрелки
+int movearr(int *x, int *y)     //aacclicl eiior nndleec
 {
    int a;
    if (kbhit())
@@ -811,7 +987,7 @@ int movearr(int *x, int *y)     //движение конца стрелки
    return (0);
 }
 
-int movefullarr(int *x1, int *x2, int *y1, int *y2)       //движение всей стрелки
+int movefullarr(int *x1, int *x2, int *y1, int *y2)       //aacclicl anle nndleec
 {
    int X1 = *x1,X2 = *x2,Y1 = *y1,Y2 = *y2;
    int c1x,cx,c1y,cy,dx1,dx2,dy1,dy2,
@@ -869,7 +1045,7 @@ int movefullarr(int *x1, int *x2, int *y1, int *y2)       //движение всей стрелк
    else return (0);
 }
 
-int inpactarrow()       //работа с активной стрелкой
+int inpactarrow()       //drainr n rencaiie nndleeie
 {
    if (typearrow == 1)
    {
@@ -891,7 +1067,7 @@ int inpactarrow()       //работа с активной стрелкой
    return (0);
 }
 
-void Setup()    //установка стартовых параметров
+void Setup()    //onnriiaer nnrdniauo drdrelndia
 {
    actoa =0;
    typeoa = 0;
@@ -903,9 +1079,44 @@ void Setup()    //установка стартовых параметров
    inputtextmode = 0;
    s = BMP;
    MAIN = loadBMP("MAIN.jpg");
+   Im1 = loadBMP("sBMP.jpg");
+   Im2 = loadBMP("sTXT.jpg");
+   Im3 = loadBMP("text2.jpg");
+   Im4 = loadBMP("text3.jpg");
+   Im5 = loadBMP("typeoa1.jpg");
+   Im6 = loadBMP("inputtext.jpg");
 }
 
-void Input() // ввод
+void stoBMP()
+{
+   s = BMP;
+   return;
+}
+
+void stoTXT()
+{
+   s = TXT;
+   return;
+}
+
+void inpsavename()
+{
+   actoa = 0;
+   typeoa = 0;
+   if(s == BMP) inputtext(savebmp,2);
+   else inputtext(savetxt,2);
+   return;
+}
+
+void inpopenname()
+{
+   actoa = 0;
+   typeoa = 0;
+   inputtext(opentxt,3);
+   return;
+}
+
+void Input() // aaia
 {
    if (inputtextmode != 0)
    {
@@ -957,9 +1168,15 @@ void Input() // ввод
    if (buttonobj(1,155,150,193,addobject,ROMB)) return;
    if (buttonobj(1,195,150,234,addobject,SKVAD)) return;
    if (button(1,236,150,273,addarrow)) return;
+   if (button(48,505,103,529,stoBMP)) return;
+   if (button(48,530,103,553,stoTXT)) return;
+   if (button(7,452,144,470,inpsavename)) return;
+   if (button(7,478,144,496,inpopenname)) return;
+   if (button(118,0,179,58,save)) return;
+   if (button(57,2,118,56,open)) return;
 }
 
-void Draw()     //рисование
+void Draw()     //dcniaricl
 {
    p = 1 - p;
    setactivepage(p);
@@ -967,8 +1184,11 @@ void Draw()     //рисование
    putimage(0, 0, MAIN, COPY_PUT);
    drawallobjects();
    drawallarrows();
+   if(s == BMP) putimage(0, 0, Im1, COPY_PUT);
+   else putimage(0, 0, Im2, COPY_PUT);
    if (actoa == 1 && typeoa == 1)
    {
+      putimage(0, 0, Im5, COPY_PUT);
       setbkmode(TRANSPARENT);
       setcolor(BLACK);
       settextjustify(LEFT_TEXT, TOP_TEXT);
@@ -977,6 +1197,9 @@ void Draw()     //рисование
    }
    if (inputtextmode != 0)
    {
+      if(inputtextmode == 2) putimage(0, 0, Im3, COPY_PUT);
+      else if (inputtextmode == 3) putimage(0, 0, Im4, COPY_PUT);
+      putimage(0, 0, Im6, COPY_PUT);
       setbkmode(TRANSPARENT);
       setcolor(BLACK);
       settextjustify(LEFT_TEXT, TOP_TEXT);
@@ -985,7 +1208,7 @@ void Draw()     //рисование
    setvisualpage(p);
 }
 
-int main()      //программа
+int main()      //ddiadreer
 {
    initwindow(788,588);
    Setup();
